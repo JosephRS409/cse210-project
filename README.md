@@ -1,5 +1,5 @@
-# [PROGRAM NAME] 
-Finding Dallin
+# [Finding Dallin] 
+
 Dallin is gone! Again...  
 
 Where did he go?  
