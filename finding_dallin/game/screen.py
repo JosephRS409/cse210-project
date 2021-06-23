@@ -18,6 +18,7 @@ class show_screen(arcade.Window):
             super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
             arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
+            self.background = "finding_dallin\\assets\\cat.jpg"
             self.player_sprite = None
             self.player_list = None
             self.left_pressed = False
@@ -76,12 +77,17 @@ class show_screen(arcade.Window):
 
         self.player_list = arcade.SpriteList()
         self.player_list.append(self.player)
+        self.background = arcade.load_texture("finding_dallin\\assets\\cat.jpg" )
         
 
     def on_draw(self):
         """ Render the screen. """
 
         arcade.start_render()
+        arcade.draw_lrwh_rectangle_textured(200, 0,
+                                            SCREEN_WIDTH/2, SCREEN_HEIGHT,
+                                            self.background)
         self.player_list.draw()
+
         # Code to draw the screen goes here
 
