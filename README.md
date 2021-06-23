@@ -1,5 +1,32 @@
-# [PROGRAM NAME] 
-[a description of the program]
+# [Finding Dallin] 
+
+Dallin is gone! Again...  
+
+Where did he go?  
+
+The last time we saw him was by that stereotypically creepy cave entrance.  
+
+We best go find him. 
+
+And so it begins. 
+
+Structure: 
+
+4 levels to map – one boss and three stages (increasing in difficulty?) 
+
+Beating enemies or moving up a level involves solving a puzzle, beating a rhythm challenge, or something of our discretion 
+
+Set up puzzles/traps/rhythm-games 
+
+Start with puzzles. Add rhythm games after. (mini-game?) 
+
+Heart system (Legend of Zelda) 
+
+How to win/lose: 
+
+Win: Save Dallin 
+
+Lose: Fail to save Dallin by losing too many hearts via incorrect puzzles or <80% accuracy in rhythm. 
 
 ## Getting Started
 ---
@@ -22,8 +49,8 @@ root                    (project root folder)
 
 ## Required Technologies
 ---
-[list required libraries]
+Python Arcade
 
 ## Authors
 ---
-[list author names and emails]
+Alan Wangsgard, wan20003@gmail.com
