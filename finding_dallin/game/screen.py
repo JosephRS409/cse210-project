@@ -1,9 +1,11 @@
-
+import tkinter as tk
 import arcade
 
+width = tk.Tk().winfo_screenwidth()
+height = tk.Tk().winfo_screenheight()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = width
+SCREEN_HEIGHT = height
 SCREEN_TITLE = "DALLIN IS A G"
 
 
