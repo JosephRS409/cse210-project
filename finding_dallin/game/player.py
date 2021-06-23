@@ -3,7 +3,8 @@ import arcade
 class player(arcade.Sprite):
 
     def __init__(self):
-        IMAGE = "finding_dallin\\assets\\robot.png"
+        # IMAGE = "finding_dallin\\assets\\robot.png"
+        IMAGE = "finding_dallin\\assets\\flying_down.png"
         super().__init__(IMAGE)
 
         self.center_x = 50
