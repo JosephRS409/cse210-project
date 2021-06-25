@@ -5,8 +5,8 @@ from game.player import player
 width = tk.Tk().winfo_screenwidth()
 height = tk.Tk().winfo_screenheight()
 
-SCREEN_WIDTH = width
-SCREEN_HEIGHT = height
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 SCREEN_TITLE = "DALLIN IS A G"
 
 
@@ -25,6 +25,10 @@ class show_screen(arcade.Window):
             self.right_pressed = False
             self.up_pressed = False
             self.down_pressed = False
+            self.left = 0
+            self.right = 600
+            self.top = 800
+            self.bottom = 0
             self.player = player()
 
     def on_update(self, delta_time):
@@ -41,6 +45,31 @@ class show_screen(arcade.Window):
             self.player.change_x = -MOVEMENT_SPEED
         elif self.right_pressed and not self.left_pressed:
             self.player.change_x = MOVEMENT_SPEED
+        
+
+        if self.player.center_x <= (self.left + 100):
+            self.right -= 3
+            self.left -= 3
+        elif self.player.center_y <= (self.bottom +100):
+            self.top -= 3
+            self.bottom -= 3
+        elif self.player.center_x >= (self.right -100):
+            self.right += 3
+            self.left += 3
+        elif self.player.center_y >= (self.top -100):
+            self.top += 3
+            self.bottom += 3
+
+        if self.player.center_x >= 1000:
+            self.player.center_x = 1000
+        elif self.player.center_x <= 0:
+            self.player.center_x = 0
+        elif self.player.center_y >= 2000:
+            self.player.center_y = 2000
+        elif self.player.center_y <= 0:
+            self.player.center_y = 0
+
+        arcade.set_viewport(self.left, self.right, self.bottom, self.top)
 
         # Call update to move the sprite
         # If using a physics engine, call update player to rely on physics engine
@@ -84,8 +113,8 @@ class show_screen(arcade.Window):
         """ Render the screen. """
 
         arcade.start_render()
-        arcade.draw_lrwh_rectangle_textured(200, 0,
-                                            SCREEN_WIDTH/2, SCREEN_HEIGHT,
+        arcade.draw_lrwh_rectangle_textured(0, 0,
+                                            1000, 2000,
                                             self.background)
         self.player_list.draw()
 
