@@ -1,7 +1,9 @@
 # program entry point
 import arcade
-from game.screen import show_screen
-from game.player import player
+from game.screen import Show_Screen
+
+
+from game.player import Player #Like the Paddle
 # from game.output_service import ArcadeOutputService
 
 
@@ -9,8 +11,11 @@ from game.player import player
 
 def main():
     """ Main method """
-    window = show_screen()
-    person = player()
+    
+    
+    
+    window = Show_Screen()
+    person = Player()
     window.setup(person)
     arcade.run()
 

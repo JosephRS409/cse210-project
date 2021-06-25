@@ -1,15 +1,17 @@
 import tkinter as tk
 import arcade
 
-width = tk.Tk().winfo_screenwidth()
-height = tk.Tk().winfo_screenheight()
+# width = tk.Tk().winfo_screenwidth()
+# height = tk.Tk().winfo_screenheight()
+width = 800
+height = 600
 
 SCREEN_WIDTH = width
 SCREEN_HEIGHT = height
 SCREEN_TITLE = "DALLIN IS A G"
 
 
-class show_screen(arcade.Window):
+class Show_Screen(arcade.Window):
 
     def __init__(self):
 
