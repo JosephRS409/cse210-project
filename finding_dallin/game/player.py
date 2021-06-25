@@ -1,14 +1,17 @@
 from PIL.Image import Image
 import arcade
-class player(arcade.Sprite):
+from game import constants
+class Player(arcade.Sprite):
 
     def __init__(self):
         # IMAGE = "finding_dallin\\assets\\robot.png"
         IMAGE = "finding_dallin\\assets\\flying_down.png"
         super().__init__(IMAGE)
 
-        self.center_x = 500
-        self.center_y = 500
+        # Sets where the avatar starts its position.
+        self.center_x = constants.SCREEN_WIDTH/2
+        self.center_y = constants.SCREEN_HEIGHT/2
+        # ?
         self.change_x = 0
         self.change_y = 0
 

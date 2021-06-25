@@ -1,9 +1,6 @@
 
-from game.director import director
+from game.director import Director
 
-
-
-
-director()
+Director()
 
 
