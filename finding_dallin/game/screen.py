@@ -80,13 +80,21 @@ class Show_screen(arcade.Window):
             self.bottom += 3
 
         if self.player.center_x >= 1000:
-            self.player.center_x = 1000
+            self.player.center_x = 990
+            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            arcade.play_sound(sound)
         elif self.player.center_x <= 0:
-            self.player.center_x = 0
+            self.player.center_x = 10
+            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            arcade.play_sound(sound)
         elif self.player.center_y >= 2000:
-            self.player.center_y = 2000
+            self.player.center_y = 1990
+            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            arcade.play_sound(sound)
         elif self.player.center_y <= 0:
-            self.player.center_y = 0
+            self.player.center_y = 10
+            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            arcade.play_sound(sound)
 
         arcade.set_viewport(self.left, self.right, self.bottom, self.top)
 
