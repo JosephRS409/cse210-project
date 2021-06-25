@@ -44,8 +44,8 @@ class Show_screen(arcade.Window):
             self.player = Player()
         
         # Used to keep track of our scrolling
-        self.view_bottom = 0
-        self.view_left = 0
+            self.view_bottom = 0
+            self.view_left = 0
         
         # Our physics engine
         # self.physics_engine = None
