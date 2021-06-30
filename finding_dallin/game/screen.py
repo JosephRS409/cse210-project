@@ -2,6 +2,7 @@
 import arcade
 from game import constants
 from game.player import Player
+from game.obstacles import Obstacles
 
 
 SCREEN_WIDTH = 800
@@ -24,78 +25,98 @@ class Show_screen(arcade.Window):
 
     def __init__(self):
 
-
-            # Call the parent class and set up the window
-            super().__init__(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
-
-            arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
-            self.background = "finding_dallin\\assets\\cat.jpg"
-            self.player_sprite = None
-            self.player_list = None
-            self.left_pressed = False
-            self.right_pressed = False
-            self.up_pressed = False
-            self.down_pressed = False
-            self.left = 0
-            self.right = 600
-            self.top = 800
-            self.bottom = 0
-
-            self.player = Player()
+    # This calls the parent class to set up the window
+        super().__init__(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
+    # And color
+        arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
+        # self.background = "finding_dallin\\assets\\cat.jpg"
+        self.background = arcade.csscolor.TAN
         
-        # Used to keep track of our scrolling
-            self.view_bottom = 0
-            self.view_left = 0
-        
-        # Our physics engine
-        # self.physics_engine = None
+    # Initialize
+        self.player_sprite = None
+    # Why do we have a list for player?
+        self.player_list = None
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
+        self.left = 0
+        self.right = 600
+        self.top = 800
+        self.bottom = 0
 
+    # Initialize the player class here. (To use it!)
+        self.player = Player()
+    
+    # Used to keep track of our scrolling
+        self.view_bottom = 0
+        self.view_left = 0
+        
+    # Initialize the objects. e.g. "door"
+    # ? Why do these work?
+        self.door = Obstacles()
+        self.wall = Obstacles()
+        self.enemy = Obstacles()
+        
+    # Initialize the background and objects.
+        self.wall_list = None
+        self.door_list = None
+                            
+    # Our physics engine
+        self.physics_engine = None
+
+    # ? Why is "delta_time" here?
     def on_update(self, delta_time):
-        """ Movement and game logic """
+        """ Player avatar position, movement speed,
+        game logic, and view port"""
         # Calculate speed based on the keys pressed
         self.player.change_x = 0
         self.player.change_y = 0
-        MOVEMENT_SPEED = 3
+        # This is how fast the character moves.
+        MOVEMENT_SPEED_X = 6
+        MOVEMENT_SPEED_Y = 8
+        # 
         if self.up_pressed and not self.down_pressed:
-            self.player.change_y = MOVEMENT_SPEED
+            self.player.change_y = MOVEMENT_SPEED_Y
         elif self.down_pressed and not self.up_pressed:
-            self.player.change_y = -MOVEMENT_SPEED
+            self.player.change_y = -MOVEMENT_SPEED_Y
         if self.left_pressed and not self.right_pressed:
-            self.player.change_x = -MOVEMENT_SPEED
+            self.player.change_x = -MOVEMENT_SPEED_X
         elif self.right_pressed and not self.left_pressed:
-            self.player.change_x = MOVEMENT_SPEED
+            self.player.change_x = MOVEMENT_SPEED_X
         
 
         if self.player.center_x <= (self.left + 100):
-            self.right -= 3
-            self.left -= 3
+            self.right -= 6
+            self.left -= 6
         elif self.player.center_y <= (self.bottom +100):
-            self.top -= 3
-            self.bottom -= 3
+            self.top -= 8
+            self.bottom -= 8
         elif self.player.center_x >= (self.right -100):
-            self.right += 3
-            self.left += 3
+            self.right += 6
+            self.left += 6
         elif self.player.center_y >= (self.top -100):
-            self.top += 3
-            self.bottom += 3
+            self.top += 8
+            self.bottom += 8
 
+        sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
         if self.player.center_x >= 1000:
             self.player.center_x = 990
-            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
             arcade.play_sound(sound)
         elif self.player.center_x <= 0:
             self.player.center_x = 10
-            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
             arcade.play_sound(sound)
         elif self.player.center_y >= 2000:
             self.player.center_y = 1990
-            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
             arcade.play_sound(sound)
         elif self.player.center_y <= 0:
             self.player.center_y = 10
-            sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+            # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
             arcade.play_sound(sound)
 
+        # # This is what we see on screen.
         arcade.set_viewport(self.left, self.right, self.bottom, self.top)
 
         # Call update to move the sprite
@@ -145,14 +166,15 @@ class Show_screen(arcade.Window):
             self.view_bottom = int(self.view_bottom)
             self.view_left = int(self.view_left)
 
-            # Do the scrolling
+            # Does the scrolling
             arcade.set_viewport(self.view_left,
                                 constants.SCREEN_WIDTH + self.view_left,
                                 self.view_bottom,
                                 constants.SCREEN_HEIGHT + self.view_bottom)
 
     def on_key_press(self, key, modifiers):
-        """Called whenever a key is pressed. """
+        """ Called whenever a key is pressed. 
+        The "Controls," if you will. """
 
         if key == arcade.key.UP:
             self.up_pressed = True
@@ -182,8 +204,15 @@ class Show_screen(arcade.Window):
         self.view_bottom = 0
         self.view_left = 0
         
+        # Makes the character
         self.player_list = arcade.SpriteList()
         self.player_list.append(self.player)
+        
+        # Makes our door
+        # ? Do we need this with the background as it is?
+        self.door_list = arcade.SpriteList(use_spatial_hash=True, is_static=True)
+        door = "finding_dallin/assets/images/doorClosed_mid.png"
+        self.door_list.append(self.door)
         
         # # Set up the player, specifically placing it at these coordinates.
         image_source = "finding_dallin\\assets\\flying_down.png"
@@ -192,19 +221,75 @@ class Show_screen(arcade.Window):
         # self.player_sprite.center_y = 96
         # self.player_list.append(self.player_sprite)
         
-        self.background = arcade.load_texture("finding_dallin\\assets\\cat.jpg" )
+        # self.background = arcade.load_texture("finding_dallin\\assets\\cat.jpg" )
+        self.background = arcade.csscolor.TAN
         
+        
+        
+        
+        # Now for the background.       
+        map_name = "finding_dallin\\assets\map2_with_walls.tmx"
+        
+        # Read in the tiled map
+        my_map = arcade.tilemap.read_tmx(map_name)
+        self.end_of_map = my_map.map_size.width * constants.GRID_PIXEL_SIZE
+        # --- Wall Layer ---
+        self.wall_list = arcade.tilemap.process_layer(my_map,
+                                                      'wall Tile Layer',
+                                                      constants.TILE_SCALING,
+                                                      use_spatial_hash=True)
+        # --- Coins ---
+        # self.coin_list = arcade.tilemap.process_layer(my_map,
+        #                                               'Coins',
+        #                                               TILE_SCALING,
+        #                                               use_spatial_hash=True)
+        
+        # --- Other stuff
+        # Set the background color
+        if my_map.background_color:
+            arcade.set_background_color(my_map.background_color)
+        
+        #             # --- Other stuff
+        # # Set the background color
+        # if self.tile_map.tiled_map.background_color:
+        #     arcade.set_background_color(self.tile_map.tiled_map.background_color)
 
+        # Keep player from running through the wall_list layer
+        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
+                                                             self.wall_list,
+                                                             gravity_constant=constants.GRAVITY) 
+       
+       
+    #    2.5.7
+        # map_name = "finding_dallin\assets\map_basic.json"
+        
+        # # Layer Specific Options for the Tilemap
+        # layer_options = {
+        #     "wall Tile Layer": {
+        #         "use_spatial_hash": True,
+        #     },
+        # }
+        
+        # # Read in the tiled map
+        # self.tile_map = arcade.load_tilemap(map_name, TILE_SCALING, layer_options)
+
+        # # Initialize Scene with our TileMap, this will automatically add all layers
+        # # from the map as SpriteLists in the scene in the proper order.
+        # self.scene = arcade.Scene.from_tilemap(self.tile_map)
+        
     def on_draw(self):
         """ Render the screen. """
 
         arcade.start_render()
 
-        arcade.draw_lrwh_rectangle_textured(0, 0,
-                                            1000, 2000,
-
-                                            self.background)
+        # arcade.draw_lrwh_rectangle_textured(0, 0,
+        #                                     1000, 2000,
+        #                                     self.background)
+        
+        arcade.draw_lrtb_rectangle_filled(0, 1000, 2000, 0, (210, 180, 140))
+        
         self.player_list.draw()
+        self.door.draw()
 
         # Code to draw the screen goes here
 
