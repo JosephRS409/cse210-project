@@ -1,5 +1,4 @@
 # import tkinter as tk
-from game import player
 import arcade
 from game import constants
 from game.player import Player
