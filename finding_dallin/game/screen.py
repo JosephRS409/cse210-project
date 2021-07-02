@@ -3,6 +3,7 @@ import arcade
 from game import constants
 from game.player import Player
 from game.obstacles import Obstacles
+from game.enemy import Enemy
 
 
 SCREEN_WIDTH = 800
@@ -36,6 +37,7 @@ class Show_screen(arcade.Window):
         self.player_sprite = None
     # Why do we have a list for player?
         self.player_list = None
+        self.enemy_list = None
         self.left_pressed = False
         self.right_pressed = False
         self.up_pressed = False
@@ -47,6 +49,7 @@ class Show_screen(arcade.Window):
 
     # Initialize the player class here. (To use it!)
         self.player = Player()
+        self.enemy = Enemy()
     
     # Used to keep track of our scrolling
         self.view_bottom = 0
@@ -127,27 +130,32 @@ class Show_screen(arcade.Window):
         #         print("yeet")
         wall_hit = arcade.check_for_collision_with_list(self.player, self.wall_list)
         for wall in wall_hit:
-            if self.right_pressed:
-                self.player.center_x = wall.center_x - 60
-            elif self.left_pressed:
-                self.player.center_x = wall.center_x + 60
-            elif self.up_pressed:
-                self.player.center_y = wall.center_y - 60
-            elif self.down_pressed:
-                self.player.center_y = wall.center_y + 60
+            if wall.center_y > self.player.center_y:
+                self.player.center_y -= 5
+                arcade.play_sound(sound)
+            elif wall.center_y < self.player.center_y:
+                self.player.center_y += 5
+                arcade.play_sound(sound)
+            if wall.center_x > self.player.center_x:
+                self.player.center_x -= 5
+                arcade.play_sound(sound)
+            elif wall.center_x < self.player.center_x:
+                self.player.center_x += 5
+                arcade.play_sound(sound)
+           
         door_hit = arcade.check_for_collision_with_list(self.player, self.door_list)
         for door in door_hit:
             if "room_key" in self.player.keys:
                 self.door_list.remove(door)
             else:
-                if self.right_pressed:
-                    self.player.center_x = door.center_x - 50
-                if self.up_pressed:
-                    self.player.center_y = door.center_y - 50
-                if self.down_pressed:
-                    self.player.center_y = door.center_y + 50
-                if self.left_pressed:
-                    self.player.center_x = door.center_x + 50
+                if door.center_y > self.player.center_y:
+                    self.player.center_y -= 5
+                elif door.center_y < self.player.center_y:
+                    self.player.center_y += 5
+                if door.center_x > self.player.center_x:
+                    self.player.center_x -= 5
+                elif door.center_x < self.player.center_x:
+                    self.player.center_x += 5
 
         key_hit = arcade.check_for_collision_with_list(self.player, self.key_list)
         for key in key_hit:
@@ -245,7 +253,10 @@ class Show_screen(arcade.Window):
         # Makes the character
         self.player_list = arcade.SpriteList()
         self.player_list.append(self.player)
+        # self.player_list.append(self.enemy)
         
+        # self.enemy_list = arcade.SpriteList()
+        # self.enemy_list.append(self.enemy)
         # Makes our door
         # ? Do we need this with the background as it is?
         # self.door_list = arcade.SpriteList(use_spatial_hash=True, is_static=True)
@@ -342,6 +353,7 @@ class Show_screen(arcade.Window):
         self.wall_list.draw()
         self.door_list.draw()
         self.key_list.draw()
+        # self.enemy_list.draw()
         self.player_list.draw()
         # self.door.draw()
 

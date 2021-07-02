@@ -1,4 +1,4 @@
-from PIL.Image import Image
+
 import arcade
 from game import constants
 class Player(arcade.Sprite):
