@@ -1,4 +1,5 @@
 # import tkinter as tk
+from game import player
 import arcade
 from game import constants
 from game.player import Player
@@ -42,8 +43,8 @@ class Show_screen(arcade.Window):
         self.down_pressed = False
         self.left = 0
         self.right = 600
-        self.top = 800
-        self.bottom = 0
+        self.top = 3200
+        self.bottom = 2600
 
     # Initialize the player class here. (To use it!)
         self.player = Player()
@@ -61,9 +62,14 @@ class Show_screen(arcade.Window):
     # Initialize the background and objects.
         self.wall_list = None
         self.door_list = None
+        self.key_list = None
+        self.background_list = None
                             
     # Our physics engine
         self.physics_engine = None
+        # self.physics_engine = arcade.PhysicsEnginePlatformer(self.player,
+        #                                                      self.wall_list,
+        #                                                      gravity_constant=0)
 
     # ? Why is "delta_time" here?
     def on_update(self, delta_time):
@@ -100,22 +106,55 @@ class Show_screen(arcade.Window):
             self.bottom += 8
 
         sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
-        if self.player.center_x >= 1000:
-            self.player.center_x = 990
-            arcade.play_sound(sound)
-        elif self.player.center_x <= 0:
-            self.player.center_x = 10
-            # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
-            arcade.play_sound(sound)
-        elif self.player.center_y >= 2000:
-            self.player.center_y = 1990
-            # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
-            arcade.play_sound(sound)
-        elif self.player.center_y <= 0:
-            self.player.center_y = 10
-            # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
-            arcade.play_sound(sound)
+        # if self.player.center_x >= 1000:
+        #     self.player.center_x = 990
+        #     arcade.play_sound(sound)
+        # elif self.player.center_x <= 0:
+        #     self.player.center_x = 10
+        #     # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+        #     arcade.play_sound(sound)
+        # elif self.player.center_y >= 2000:
+        #     self.player.center_y = 1990
+        #     # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+        #     arcade.play_sound(sound)
+        # elif self.player.center_y <= 0:
+        #     self.player.center_y = 10
+        #     # sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+        #     arcade.play_sound(sound)
+        # for wall in self.wall_list:
+        #     print(wall.center_x)
+        #     if self.player.center_x == wall.center_x:
+        #         # self.player.center_x = wall.center_x - 200
+        #         print("yeet")
+        wall_hit = arcade.check_for_collision_with_list(self.player, self.wall_list)
+        for wall in wall_hit:
+            if self.right_pressed:
+                self.player.center_x = wall.center_x - 60
+            elif self.left_pressed:
+                self.player.center_x = wall.center_x + 60
+            elif self.up_pressed:
+                self.player.center_y = wall.center_y - 60
+            elif self.down_pressed:
+                self.player.center_y = wall.center_y + 60
+        door_hit = arcade.check_for_collision_with_list(self.player, self.door_list)
+        for door in door_hit:
+            if "room_key" in self.player.keys:
+                self.door_list.remove(door)
+            else:
+                if self.right_pressed:
+                    self.player.center_x = door.center_x - 50
+                if self.up_pressed:
+                    self.player.center_y = door.center_y - 50
+                if self.down_pressed:
+                    self.player.center_y = door.center_y + 50
+                if self.left_pressed:
+                    self.player.center_x = door.center_x + 50
 
+        key_hit = arcade.check_for_collision_with_list(self.player, self.key_list)
+        for key in key_hit:
+            self.key_list.remove(key)
+            self.player.keys.append("room_key")
+            
         # # This is what we see on screen.
         arcade.set_viewport(self.left, self.right, self.bottom, self.top)
 
@@ -210,9 +249,9 @@ class Show_screen(arcade.Window):
         
         # Makes our door
         # ? Do we need this with the background as it is?
-        self.door_list = arcade.SpriteList(use_spatial_hash=True, is_static=True)
-        door = "finding_dallin/assets/images/doorClosed_mid.png"
-        self.door_list.append(self.door)
+        # self.door_list = arcade.SpriteList(use_spatial_hash=True, is_static=True)
+        # door = "finding_dallin/assets/images/doorClosed_mid.png"
+        # self.door_list.append(self.door)
         
         # # Set up the player, specifically placing it at these coordinates.
         image_source = "finding_dallin\\assets\\flying_down.png"
@@ -228,16 +267,28 @@ class Show_screen(arcade.Window):
         
         
         # Now for the background.       
-        map_name = "finding_dallin\\assets\map2_with_walls.tmx"
+        map_name = "finding_dallin/assets/test.tmx"
         
         # Read in the tiled map
         my_map = arcade.tilemap.read_tmx(map_name)
         self.end_of_map = my_map.map_size.width * constants.GRID_PIXEL_SIZE
         # --- Wall Layer ---
         self.wall_list = arcade.tilemap.process_layer(my_map,
-                                                      'wall Tile Layer',
+                                                      'walls',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
+        self.door_list = arcade.tilemap.process_layer(my_map,
+                                                      'doors',
+                                                      constants.TILE_SCALING,
+                                                      use_spatial_hash=True)
+        self.key_list = arcade.tilemap.process_layer(my_map,
+                                                      'keys',
+                                                      constants.TILE_SCALING,
+                                                      use_spatial_hash=True)
+        self.background_list = arcade.tilemap.process_layer(my_map,
+                                                     'background',
+                                                     constants.TILE_SCALING,
+                                                     use_spatial_hash=True)
         # --- Coins ---
         # self.coin_list = arcade.tilemap.process_layer(my_map,
         #                                               'Coins',
@@ -288,8 +339,12 @@ class Show_screen(arcade.Window):
         
         arcade.draw_lrtb_rectangle_filled(0, 1000, 2000, 0, (210, 180, 140))
         
+        self.background_list.draw()
+        self.wall_list.draw()
+        self.door_list.draw()
+        self.key_list.draw()
         self.player_list.draw()
-        self.door.draw()
+        # self.door.draw()
 
         # Code to draw the screen goes here
 

@@ -9,11 +9,14 @@ class Player(arcade.Sprite):
         super().__init__(IMAGE)
 
         # Sets where the avatar starts its position.
-        self.center_x = constants.SCREEN_WIDTH/2
-        self.center_y = constants.SCREEN_HEIGHT/2
+        # self.center_x = constants.SCREEN_WIDTH/2
+        # self.center_y = constants.SCREEN_HEIGHT/2
+        self.center_x = 200
+        self.center_y = 3100
         # ?
         self.change_x = 0
         self.change_y = 0
+        self.keys = []
 
 
     def update(self):
