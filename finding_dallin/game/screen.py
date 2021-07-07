@@ -3,7 +3,8 @@ import arcade
 from game import constants
 from game.player import Player
 from game.obstacles import Obstacles
-from game.enemy import Enemy
+from game.game_over import Over
+from game.dallin import Dallin
 
 
 SCREEN_WIDTH = 800
@@ -22,12 +23,12 @@ SCREEN_TITLE = "DALLIN IS A G"
 # SCREEN_HEIGHT = height
 # SCREEN_TITLE = "DALLIN IS A G"
 
-class Show_screen(arcade.Window):
+class Show_screen(arcade.View):
 
     def __init__(self):
 
     # This calls the parent class to set up the window
-        super().__init__(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
+        super().__init__()
     # And color
         arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
         # self.background = "finding_dallin\\assets\\cat.jpg"
@@ -49,7 +50,7 @@ class Show_screen(arcade.Window):
 
     # Initialize the player class here. (To use it!)
         self.player = Player()
-        self.enemy = Enemy()
+        self.dallin = Dallin()
     
     # Used to keep track of our scrolling
         self.view_bottom = 0
@@ -162,6 +163,12 @@ class Show_screen(arcade.Window):
             self.key_list.remove(key)
             self.player.keys.append("room_key")
             
+
+        dallin_hit = arcade.check_for_collision(self.player, self.dallin)
+        if dallin_hit:
+            show_view = Over()
+            show_view.setup()
+            self.window.show_view(show_view)
         # # This is what we see on screen.
         arcade.set_viewport(self.left, self.right, self.bottom, self.top)
 
@@ -253,7 +260,8 @@ class Show_screen(arcade.Window):
         # Makes the character
         self.player_list = arcade.SpriteList()
         self.player_list.append(self.player)
-        # self.player_list.append(self.enemy)
+        self.player_list.append(self.dallin)
+                # self.player_list.append(self.enemy)
         
         # self.enemy_list = arcade.SpriteList()
         # self.enemy_list.append(self.enemy)
