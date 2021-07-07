@@ -167,7 +167,7 @@ class Show_screen(arcade.View):
         dallin_hit = arcade.check_for_collision(self.player, self.dallin)
         if dallin_hit:
             show_view = Over()
-            show_view.setup()
+            # show_view.setup()
             self.window.show_view(show_view)
         # # This is what we see on screen.
         arcade.set_viewport(self.left, self.right, self.bottom, self.top)

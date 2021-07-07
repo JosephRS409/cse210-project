@@ -1,5 +1,6 @@
 import arcade
 from game.screen import Show_screen
+from game.game_over import Over
 from game.title_view import Title
 from game.player import Player
 from game import constants

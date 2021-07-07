@@ -1,6 +1,7 @@
 
 import arcade
 from game import constants
+from game.game_over import Over
 from game.screen import Show_screen
 
 class Title(arcade.View):
@@ -23,5 +24,6 @@ class Title(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         show_view = Show_screen()
+        self.window.clear()
         show_view.setup()
         self.window.show_view(show_view)
