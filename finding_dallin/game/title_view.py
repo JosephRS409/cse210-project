@@ -18,7 +18,7 @@ class Title(arcade.View):
         arcade.start_render()
         arcade.draw_text("Finding Dallin", constants.SCREEN_WIDTH / 2,
                          constants.SCREEN_HEIGHT/2, arcade.color.CRIMSON, font_size=50, anchor_x="center")
-        arcade.draw_text("Joseph, Alan", constants.SCREEN_WIDTH / 2,
+        arcade.draw_text("Joseph, Alan, Austin", constants.SCREEN_WIDTH / 2,
                          constants.SCREEN_HEIGHT/2 - 50, arcade.color.CRIMSON, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
