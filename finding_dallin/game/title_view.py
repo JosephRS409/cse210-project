@@ -1,7 +1,6 @@
 
 import arcade
 from game import constants
-from game.game_over import Over
 from game.screen import Show_screen
 
 class Title(arcade.View):
