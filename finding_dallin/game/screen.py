@@ -272,8 +272,10 @@ class Show_screen(arcade.View):
         # self.door_list.append(self.door)
         
         # # Set up the player, specifically placing it at these coordinates.
-        image_source = "finding_dallin\\assets\\flying_down.png"
-        self.player_sprite = arcade.Sprite(image_source, constants.CHARACTER_SCALING)
+        
+        # image_source = "finding_dallin\\assets\\flying_down.png"
+        # # So much cleaner!!!
+        self.player_sprite = arcade.Sprite(constants.PLAYER_BAT, constants.CHARACTER_SCALING)
         # self.player_sprite.center_x = 64
         # self.player_sprite.center_y = 96
         # self.player_list.append(self.player_sprite)
