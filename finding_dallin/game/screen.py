@@ -233,7 +233,8 @@ class Show_screen(arcade.View):
         
         print(self.dallin.center_x, self.dallin.center_y)
         
-        
+        music = arcade.load_sound("finding_dallin\\assets\\song1.mp3")
+        arcade.play_sound(music, .5, looping=True)
         # Now for the background.       
         map_name = "finding_dallin\\assets\\Map.tmx"
         
