@@ -91,7 +91,7 @@ class Show_screen(arcade.View):
             self.top += 8
             self.bottom += 8
 
-        sound = arcade.load_sound("finding_dallin\\assets\sounds\\fall3.wav")
+        sound = arcade.load_sound(constants.COLLISION_SOUND)
         
         wall_hit = arcade.check_for_collision_with_list(self.player, self.wall_list)
         for wall in wall_hit:
@@ -233,13 +233,12 @@ class Show_screen(arcade.View):
         
         print(self.dallin.center_x, self.dallin.center_y)
         
-        music = arcade.load_sound("finding_dallin\\assets\\song1.mp3")
+        music = arcade.load_sound(constants.MUSIC)
         arcade.play_sound(music, .5, looping=True)
-        # Now for the background.       
-        map_name = "finding_dallin\\assets\\Map.tmx"
-        
+
+        # Now for the background.               
         # Read in the tiled map
-        my_map = arcade.tilemap.read_tmx(map_name)
+        my_map = arcade.tilemap.read_tmx(constants.MAP)
         # self.end_of_map = my_map.map_size.width * constants.GRID_PIXEL_SIZE
         # --- Wall Layer ---
         self.wall_list = arcade.tilemap.process_layer(my_map,

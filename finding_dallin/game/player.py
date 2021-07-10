@@ -4,8 +4,7 @@ from game import constants
 class Player(arcade.Sprite):
 
     def __init__(self):
-        IMAGE = "finding_dallin\\assets\\flying_down.png"
-        super().__init__(IMAGE, .4)
+        super().__init__(constants.PLAYER_BAT, .4)
 
         self.center_x = 100
         self.center_y = 6300
