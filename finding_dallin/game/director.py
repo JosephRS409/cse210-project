@@ -10,7 +10,6 @@ class Director():
             constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
         self.main()
         self.player = Player()
-        self.title = Title()
         # Track the current state of what key is pressed
         
     def main(self):
