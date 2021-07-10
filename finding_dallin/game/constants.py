@@ -1,3 +1,15 @@
+import os
+'''
+PUT PATHS HERE
+# '''
+PATH = os.path.dirname(os.path.abspath(__file__))
+PLAYER_BAT = os.path.join(PATH, "..", "assets", "flying_down.png")
+DALLIN = os.path.join(PATH, "..", "assets", "robot.png")
+COLLISION_SOUND = os.path.join(PATH, "..", "assets", "sounds", "fall3.wav")
+MUSIC = os.path.join(PATH, "..", "assets", "song1.mp3")
+MAP = os.path.join(PATH, "..", "assets", "Map.tmx")
+END_SCREEN = os.path.join(PATH, "..", "assets", "cat.jpg")
+
 # Constants
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600

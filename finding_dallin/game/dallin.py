@@ -1,9 +1,11 @@
 import arcade
 import random as r
+from game import constants
+
 class Dallin(arcade.Sprite):
 
     def __init__(self):
-        super().__init__("finding_dallin\\assets\\robot.png")
+        super().__init__(constants.DALLIN)
 
         # self.center_y = 3100
         # self.center_x = 100
