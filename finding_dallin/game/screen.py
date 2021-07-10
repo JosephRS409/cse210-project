@@ -295,7 +295,7 @@ class Show_screen(arcade.View):
         
 
         # Keep player from running through the wall_list layer
-        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
+        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player,
                                                              self.wall_list,
                                                              gravity_constant=constants.GRAVITY) 
        
