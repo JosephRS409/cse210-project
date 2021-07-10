@@ -298,6 +298,9 @@ class Show_screen(arcade.View):
                                                              self.wall_list,
                                                              gravity_constant=constants.GRAVITY) 
        
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        self.player.center_x = self.dallin.center_x + 100
+        self.player.center_y = self.dallin.center_y + 100
 
         
     def on_draw(self):
