@@ -81,13 +81,13 @@ class Show_screen(arcade.View):
         if self.player.center_x <= (self.left + 100):
             self.right -= 8
             self.left -= 8
-        elif self.player.center_y <= (self.bottom +100):
+        if self.player.center_y <= (self.bottom +100):
             self.top -= 8
             self.bottom -= 8
-        elif self.player.center_x >= (self.right -100):
+        if self.player.center_x >= (self.right -100):
             self.right += 8
             self.left += 8
-        elif self.player.center_y >= (self.top -100):
+        if self.player.center_y >= (self.top -100):
             self.top += 8
             self.bottom += 8
 
@@ -230,7 +230,8 @@ class Show_screen(arcade.View):
         self.player_list = arcade.SpriteList()
         self.player_list.append(self.player)
         self.player_list.append(self.dallin)
-                # self.player_list.append(self.enemy)
+        
+        print(self.dallin.center_x, self.dallin.center_y)
         
         
         # Now for the background.       
