@@ -2,6 +2,7 @@ import arcade
 from game import constants
 class Player(arcade.Sprite):
 
+<<<<<<< HEAD
     def __init__(self):        
         # Not this (which is for Window OS):
         # IMAGE = "finding_dallin\\assets\\robot.png"
@@ -17,6 +18,14 @@ class Player(arcade.Sprite):
         self.center_x = 200
         self.center_y = 3100
         
+=======
+    def __init__(self):
+        super().__init__(constants.PLAYER_BAT, .4)
+
+        self.center_x = 100
+        self.center_y = 6300
+        # ?
+>>>>>>> master
         self.change_x = 0
         self.change_y = 0
         self.keys = []
@@ -29,6 +38,7 @@ class Player(arcade.Sprite):
         self.center_x += self.change_x
         self.center_y += self.change_y
 
+<<<<<<< HEAD
         #     Check for out-of-bounds
         # if self.left < 0:
         #             self.left = 0
@@ -39,3 +49,6 @@ class Player(arcade.Sprite):
         #             self.bottom = 0
         # elif self.top > SCREEN_HEIGHT - 1:
         #             self.top = SCREEN_HEIGHT - 1
+=======
+        
+>>>>>>> master

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 from os import path
 # This works as written.
+=======
+>>>>>>> master
 import os
 '''
 PUT PATHS HERE
 # '''
+<<<<<<< HEAD
 
 # __file__ refers to the file it's in
 # PATH refers to the "game" folder in this case.
@@ -29,6 +33,15 @@ PLAYER_BAT = os.path.join(PATH, "..", "assets", "flying_down.png")
 # # Prints the directory of "constants.py"s directory:
 #     # c:\Users\default.DESKTOP-P3E3RAC\Documents\School\BYU-I\Spring_2021\2.CSE_210�Programming_with_Classes\project_template\cse210-project\finding_dallin\game
 
+=======
+PATH = os.path.dirname(os.path.abspath(__file__))
+PLAYER_BAT = os.path.join(PATH, "..", "assets", "flying_down.png")
+DALLIN = os.path.join(PATH, "..", "assets", "robot.png")
+COLLISION_SOUND = os.path.join(PATH, "..", "assets", "sounds", "fall3.wav")
+MUSIC = os.path.join(PATH, "..", "assets", "song1.mp3")
+MAP = os.path.join(PATH, "..", "assets", "Map.tmx")
+END_SCREEN = os.path.join(PATH, "..", "assets", "cat.jpg")
+>>>>>>> master
 
 # Constants
 SCREEN_WIDTH = 800
