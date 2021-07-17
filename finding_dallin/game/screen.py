@@ -2,7 +2,6 @@
 import arcade
 from game import constants
 from game.player import Player
-from game.obstacles import Obstacles
 from game.game_over import Over
 from game.dallin import Dallin
 
@@ -24,6 +23,7 @@ class Show_screen(arcade.View):
         self.background = arcade.csscolor.TAN
         
     # Initialize
+        self.my_map = arcade.tilemap.read_tmx(constants.MAP)
         self.player_sprite = None
     # Why do we have a list for player?
         self.player_list = None
@@ -36,6 +36,7 @@ class Show_screen(arcade.View):
         self.right = 800
         self.top = 6400
         self.bottom = 5800
+        self.top_mid = False
 
     # Initialize the player class here. (To use it!)
         self.player = Player()
@@ -44,12 +45,6 @@ class Show_screen(arcade.View):
     # Used to keep track of our scrolling
         self.view_bottom = 0
         self.view_left = 0
-        
-    # Initialize the objects. e.g. "door"
-    # ? Why do these work?
-        self.door = Obstacles()
-        self.wall = Obstacles()
-        self.enemy = Obstacles()
         
     # Initialize the background and objects.
         self.wall_list = None
@@ -92,21 +87,22 @@ class Show_screen(arcade.View):
             self.bottom += 8
 
         sound = arcade.load_sound(constants.COLLISION_SOUND)
-        
-        wall_hit = arcade.check_for_collision_with_list(self.player, self.wall_list)
-        for wall in wall_hit:
-            if wall.center_y > self.player.center_y:
-                self.player.center_y -= 6
-                arcade.play_sound(sound)
-            if wall.center_y < self.player.center_y:
-                self.player.center_y += 6
-                arcade.play_sound(sound)
-            if wall.center_x > self.player.center_x:
-                self.player.center_x -= 6
-                arcade.play_sound(sound)
-            if wall.center_x < self.player.center_x:
-                self.player.center_x += 6
-                arcade.play_sound(sound)
+        obj = [self.player, self.dallin]
+        for being in obj:
+            wall_hit = arcade.check_for_collision_with_list(being, self.wall_list)
+            for wall in wall_hit:
+                if wall.center_y > self.player.center_y:
+                    being.center_y -= 6
+                    arcade.play_sound(sound)
+                if wall.center_y < self.player.center_y:
+                    being.center_y += 6
+                    arcade.play_sound(sound)
+                if wall.center_x > self.player.center_x:
+                    being.center_x -= 6
+                    arcade.play_sound(sound)
+                if wall.center_x < self.player.center_x:
+                    being.center_x += 6
+                    arcade.play_sound(sound)
 
         door_hit = arcade.check_for_collision_with_list(self.player, self.gold_door)
         for door in door_hit:
@@ -188,7 +184,13 @@ class Show_screen(arcade.View):
         # If using a physics engine, call update player to rely on physics engine
         # for movement, and call physics engine here.
         self.player.update()
-        
+
+        # if self.player.center_y <= 5000 and self.top_mid == False:
+        #     self.top_mid_list = arcade.tilemap.process_layer(self.my_map,
+        #                                                         'top_mid',
+        #                                                         constants.TILE_SCALING,
+        #                                                         use_spatial_hash=False)
+        #     self.top_mid = True
         """ Movement and game logic """
 
         # --- Manage Scrolling ---
@@ -238,65 +240,64 @@ class Show_screen(arcade.View):
 
         # Now for the background.               
         # Read in the tiled map
-        my_map = arcade.tilemap.read_tmx(constants.MAP)
         # self.end_of_map = my_map.map_size.width * constants.GRID_PIXEL_SIZE
         # --- Wall Layer ---
-        self.wall_list = arcade.tilemap.process_layer(my_map,
+        self.wall_list = arcade.tilemap.process_layer(self.my_map,
                                                       'Walls',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
                                                     
-        self.gold_door = arcade.tilemap.process_layer(my_map,
+        self.gold_door = arcade.tilemap.process_layer(self.my_map,
                                                       'Gold doors',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
-        self.gold_key = arcade.tilemap.process_layer(my_map,
+        self.gold_key = arcade.tilemap.process_layer(self.my_map,
                                                       'Gold key',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
-        self.blue_door = arcade.tilemap.process_layer(my_map,
+        self.blue_door = arcade.tilemap.process_layer(self.my_map,
                                                       'Blue door',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
-        self.blue_key = arcade.tilemap.process_layer(my_map,
+        self.blue_key = arcade.tilemap.process_layer(self.my_map,
                                                      'Blue Key',
                                                      constants.TILE_SCALING,
                                                      use_spatial_hash=True)
-        self.green_door = arcade.tilemap.process_layer(my_map,
+        self.green_door = arcade.tilemap.process_layer(self.my_map,
                                                       'Green door',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
-        self.green_key = arcade.tilemap.process_layer(my_map,
+        self.green_key = arcade.tilemap.process_layer(self.my_map,
                                                      'Green Key',
                                                      constants.TILE_SCALING,
                                                      use_spatial_hash=True)
-        self.red_door = arcade.tilemap.process_layer(my_map,
+        self.red_door = arcade.tilemap.process_layer(self.my_map,
                                                       'Red door',
                                                       constants.TILE_SCALING,
                                                       use_spatial_hash=True)
-        self.red_key = arcade.tilemap.process_layer(my_map,
+        self.red_key = arcade.tilemap.process_layer(self.my_map,
                                                      'Red Key',
                                                      constants.TILE_SCALING,
                                                      use_spatial_hash=True)
-        self.deco = arcade.tilemap.process_layer(my_map,
+        self.deco = arcade.tilemap.process_layer(self.my_map,
                                                  'Decorations',
                                                  constants.TILE_SCALING,
                                                  use_spatial_hash=True)
-        self.background_list = arcade.tilemap.process_layer(my_map,
-                                                     'Floor',
+        self.background_list = arcade.tilemap.process_layer(self.my_map,
+                                                     'background',
                                                      constants.TILE_SCALING,
-                                                     use_spatial_hash=True)
+                                                     use_spatial_hash=False)
         
         # --- Other stuff
         # Set the background color
-        if my_map.background_color:
-            arcade.set_background_color(my_map.background_color)
+        if self.my_map.background_color:
+            arcade.set_background_color(self.my_map.background_color)
         
 
         # Keep player from running through the wall_list layer
-        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
-                                                             self.wall_list,
-                                                             gravity_constant=constants.GRAVITY) 
+        # self.physics_engine = arcade.PhysicsEnginePlatformer(self.player,
+        #                                                      self.wall_list,
+        #                                                      gravity_constant=constants.GRAVITY) 
        
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         self.player.center_x = self.dallin.center_x + 100
@@ -309,6 +310,8 @@ class Show_screen(arcade.View):
         arcade.start_render()
         
         self.background_list.draw()
+        # if self.top_mid == True:
+        #     self.top_mid_list.draw()
         self.wall_list.draw()
         self.gold_door.draw()
         self.blue_door.draw()
@@ -323,3 +326,6 @@ class Show_screen(arcade.View):
 
         # Code to draw the screen goes here
 
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        self.player.center_x = self.dallin.center_x + 100
+        self.player.center_y = self.dallin.center_y + 100
