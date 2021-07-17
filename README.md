@@ -10,37 +10,22 @@ We best go find him.
 
 And so it begins. 
 
-Structure: 
-
-4 levels to map – one boss and three stages (increasing in difficulty?) 
-
-Beating enemies or moving up a level involves solving a puzzle, beating a rhythm challenge, or something of our discretion 
-
-Set up puzzles/traps/rhythm-games 
-
-Start with puzzles. Add rhythm games after. (mini-game?) 
-
-Heart system (Legend of Zelda) 
-
-How to win/lose: 
 
 Win: Save Dallin 
 
-Lose: Fail to save Dallin by losing too many hearts via incorrect puzzles or <80% accuracy in rhythm. 
-
 ## Getting Started
 ---
-[how to install and run the program]
+Clone the repository and run from terminal.
 
 ## Project Structure
 ---
 The project files and folders are organized as follows:
 ```
-root                    (project root folder)
+cse210-project          (project root folder)
 +-- docs                (project documentation)
-+-- rename              [src code files - rename for project]
++-- finding_dallin      [src code files - rename for project]
   +-- assets            (program asset files)
-  +-- data              (program data files)
+  +-- game              (program data files)
   +-- __init__.py       (python package file)
   +-- __main__.py       (entry point for program)
 +-- LICENSE             (license file)
@@ -53,4 +38,4 @@ Python Arcade
 
 ## Authors
 ---
-Alan Wangsgard, wan20003@gmail.com
+Alan Wangsgard -- wan20003@byui.edu, Austin Jesperson -- jes16003@byui.edu, Joseph Stewart -- ste18050@byui.edu
