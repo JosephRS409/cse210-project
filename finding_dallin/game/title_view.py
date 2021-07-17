@@ -17,10 +17,12 @@ class Title(arcade.View):
     def setup(self):
         pass
 
-    # def on_update(self):
-    #     self.top += 10
-    #     self.bottom += 10
-
+    def on_update(self, delta_time):
+        self.top += 5
+        # self.bottom += 5
+        if self.top == 800:
+            self.top = 0
+        # if self
     def on_draw(self):
         arcade.start_render()
         arcade.draw_text("Finding Dallin", constants.SCREEN_WIDTH / 2,
