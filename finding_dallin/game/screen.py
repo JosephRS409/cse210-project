@@ -282,7 +282,7 @@ class Show_screen(arcade.View):
         self.deco = arcade.tilemap.process_layer(self.my_map,
                                                  'Decorations',
                                                  constants.TILE_SCALING,
-                                                 use_spatial_hash=True)
+                                                 use_spatial_hash=False)
         self.background_list = arcade.tilemap.process_layer(self.my_map,
                                                      'background',
                                                      constants.TILE_SCALING,
