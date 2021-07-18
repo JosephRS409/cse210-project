@@ -5,16 +5,10 @@ from game.player import Player
 from game.game_over import Over
 from game.dallin import Dallin
 
-
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "DALLIN IS A G"
-
-
 class Show_screen(arcade.View):
 
     def __init__(self):
-
+        """The view for the main game"""
     # This calls the parent class to set up the window
         super().__init__()
     # And color
@@ -181,16 +175,8 @@ class Show_screen(arcade.View):
         arcade.set_viewport(self.left, self.right, self.bottom, self.top)
 
         # Call update to move the sprite
-        # If using a physics engine, call update player to rely on physics engine
-        # for movement, and call physics engine here.
         self.player.update()
 
-        # if self.player.center_y <= 5000 and self.top_mid == False:
-        #     self.top_mid_list = arcade.tilemap.process_layer(self.my_map,
-        #                                                         'top_mid',
-        #                                                         constants.TILE_SCALING,
-        #                                                         use_spatial_hash=False)
-        #     self.top_mid = True
         """ Movement and game logic """
 
         # --- Manage Scrolling ---
@@ -300,7 +286,8 @@ class Show_screen(arcade.View):
         #                                                      gravity_constant=constants.GRAVITY) 
        
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        self.player.center_x = self.dallin.center_x + 100
+        """Teleports the player to dallin on key press"""
+        self.player.center_x = self.dallin.center_x
         self.player.center_y = self.dallin.center_y + 100
 
         
@@ -325,7 +312,3 @@ class Show_screen(arcade.View):
         self.player_list.draw()
 
         # Code to draw the screen goes here
-
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        self.player.center_x = self.dallin.center_x + 100
-        self.player.center_y = self.dallin.center_y + 100

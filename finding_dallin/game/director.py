@@ -6,6 +6,7 @@ from game import constants
 class Director():
 
     def __init__(self):
+        """Directs the game"""
         self.window = arcade.Window(
             constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
         self.main()
@@ -18,6 +19,4 @@ class Director():
             start_view = Title()
 
             self.window.show_view(start_view)
-            # And its method.
-            start_view.setup()
             arcade.run()

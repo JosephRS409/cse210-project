@@ -5,6 +5,7 @@ from game import constants
 class Dallin(arcade.Sprite):
 
     def __init__(self):
+        """Sets up the Dallin spritee in a random location on the map"""
         super().__init__(constants.DALLIN)
 
         # self.center_y = 3100

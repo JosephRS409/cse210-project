@@ -7,6 +7,7 @@ from game.screen import Show_screen
 class Title(arcade.View):
 
     def __init__(self):
+        """Shows the title screen of the game"""
         super().__init__()
         arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
 
@@ -14,16 +15,15 @@ class Title(arcade.View):
         self.top = 100
         self.bottom = 100
 
-    def setup(self):
-        pass
-
     def on_update(self, delta_time):
+        """Changes values when updated"""
         self.top += 5
         # self.bottom += 5
         if self.top == 800:
             self.top = 0
         # if self
     def on_draw(self):
+        """Draws the items on the screen"""
         arcade.start_render()
         arcade.draw_text("Finding Dallin", constants.SCREEN_WIDTH / 2,
                          constants.SCREEN_HEIGHT/2, arcade.color.CRIMSON, font_size=50, anchor_x="center")
@@ -32,6 +32,7 @@ class Title(arcade.View):
         self.texture.draw_sized(self.top,self.bottom,64,64)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """Changes the screen on mouse press"""
         show_view = Show_screen()
         self.window.clear()
         show_view.setup()
